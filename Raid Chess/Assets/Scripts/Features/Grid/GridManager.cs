@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ChessRaid
 {
-    public class Grid : WagMonoton<Grid>
+    public class GridManager : WagMonoton<GridManager>
     {
         [SerializeField] Hex _hexPrefab;
         [SerializeField] Transform _hexRoot;

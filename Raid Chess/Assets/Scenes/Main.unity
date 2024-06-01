@@ -815,31 +815,7 @@ MonoBehaviour:
   _championDefinitions:
   - {fileID: 11400000, guid: b105fd9b64ac6ca4e80a464617daa1e8, type: 2}
   _startingState:
-    Board:
-    - ChampionId: Pawn
-      Direction: 0
-      Location:
-        X: 2
-        Y: 0
-      Team: 0
-    - ChampionId: Pawn
-      Direction: 0
-      Location:
-        X: 6
-        Y: 0
-      Team: 0
-    - ChampionId: Pawn
-      Direction: 3
-      Location:
-        X: 2
-        Y: 9
-      Team: 1
-    - ChampionId: Pawn
-      Direction: 3
-      Location:
-        X: 6
-        Y: 9
-      Team: 1
+    Board: []
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1538,8 +1514,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61381ff505e81594783a82450d7d1f50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _grid: {fileID: 8428338996827262897}
-  _squad: {fileID: 664537999}
 --- !u!4 &1882495333
 Transform:
   m_ObjectHideFlags: 0
@@ -1782,7 +1756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hexPrefab: {fileID: 7788020986150115034, guid: 80065f2e2d7652f48937c42582eb172e, type: 3}
-  _hexRoot: {fileID: 4493412189927417639}
+  _hexRoot: {fileID: 0}
   _allHexes: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

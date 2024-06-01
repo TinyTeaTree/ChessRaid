@@ -19,7 +19,7 @@ namespace ChessRaid
             foreach (var loc in _startingState.Board)
             {
                 var championPrefab = _championDefinitions.First(c => c.Id == loc.ChampionId).Prefab;
-                var hex = Grid._.GetHex(loc.Location);
+                var hex = GridManager._.GetHex(loc.Location);
                 var championInstance = Instantiate(championPrefab, hex.transform);
                 Orientation orientation = new Orientation()
                 {

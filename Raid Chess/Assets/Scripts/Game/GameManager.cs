@@ -4,13 +4,12 @@ namespace ChessRaid
 {
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] Grid _grid;
-        [SerializeField] Squad _squad;
-
         void Start()
         {
-            _grid.SetUp();
-            _squad.SetUp();
+            DataWarehouse._.Init();
+            GridManager._.SetUp();
+            Squad._.SetUp();
+            TurnManager._.Start();
         }
     }
 }

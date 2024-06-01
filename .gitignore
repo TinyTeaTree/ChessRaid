@@ -7,3 +7,4 @@ Raid Chess/.vsconfig
 *.sln
 /Raid Chess/obj
 /Raid Chess/Logs
+/Raid Chess/Temp

@@ -47,7 +47,7 @@ namespace ChessRaid
             }
             else
             {
-                Grid._.MarkHexAction(hitHex, selectedAction);   
+                GridManager._.MarkHexAction(hitHex, selectedAction);   
             }
         }
 

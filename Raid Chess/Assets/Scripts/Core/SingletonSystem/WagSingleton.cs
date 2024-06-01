@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-
-
 public class WagSingleton<T>
     where T : class, new()
 {
     static T _instance;
     
 
-    public static T Instance
+    public static T _
     {
         get
         {

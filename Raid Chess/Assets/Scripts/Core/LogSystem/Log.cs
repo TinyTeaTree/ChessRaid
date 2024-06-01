@@ -11,31 +11,31 @@ public class Log : WagSingleton<Log>
 
     public static void Critical(string critical)
     {
-        Instance._defaultLogger.Critical(critical);
+        _._defaultLogger.Critical(critical);
     }
 
     public static void Editor(string editorTrace)
     {
-        Instance._defaultLogger.Editor(editorTrace);
+        _._defaultLogger.Editor(editorTrace);
     }
 
     public static void Error(string error)
     {
-        Instance._defaultLogger.Error(error);
+        _._defaultLogger.Error(error);
     }
 
     public static void Exception(Exception e)
     {
-        Instance._defaultLogger.Exception(e);
+        _._defaultLogger.Exception(e);
     }
 
     public static void Message(string message)
     {
-        Instance._defaultLogger.Message(message);
+        _._defaultLogger.Message(message);
     }
 
     public static void Warning(string warning)
     {
-        Instance._defaultLogger.Warning(warning);
+        _._defaultLogger.Warning(warning);
     }
 }

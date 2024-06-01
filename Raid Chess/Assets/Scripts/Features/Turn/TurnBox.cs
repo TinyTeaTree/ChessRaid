@@ -1,9 +1,12 @@
-using System.Data.Common;
+using System.Collections.Generic;
 
-public class TurnBox : DataBox
+namespace ChessRaid
 {
-    public const string BoxId = "Turn";
-    public override string Id => BoxId;
+    public class TurnBox : DataBox
+    {
+        public const string BoxId = "Turn";
+        public override string Id => BoxId;
 
-    public int Turn = 3;
+        public List<TurnChain> Chains = new();
+    }
 }

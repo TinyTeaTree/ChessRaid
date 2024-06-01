@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace ChessRaid
 {
     public class TurnManager : WagSingleton<TurnManager>

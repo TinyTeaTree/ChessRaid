@@ -1,0 +1,9 @@
+
+/Raid Chess/.vs
+Raid Chess/.vsconfig
+*.csproj
+/Raid Chess/Library
+/Raid Chess/UserSettings
+*.sln
+/Raid Chess/obj
+/Raid Chess/Logs

@@ -1,3 +1,6 @@
+using System;
+using System.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 
 namespace ChessRaid
@@ -9,18 +12,23 @@ namespace ChessRaid
         [SerializeField] MeshRenderer _teamRenderer;
         [SerializeField] Color _homeColor;
         [SerializeField] Color _awayColor;
+        [SerializeField] protected Animator _animator; 
+
 
         public string Id => _id;
 
         public Coord Location { get; private set; }
-        public Direction Dir { get; private set; }
+        public Direction Direction { get; private set; }
         public Team Team { get; private set; }
+        public ChampionDef Def => _def;
 
-        public void SetDirection(Direction dir)
+        public int Health { get; set; }
+
+        public void SetDirection(Direction direction)
         {
-            Dir = dir;
+            Direction = direction;
 
-            transform.rotation = Quaternion.Euler(0, (int)Dir * 360f / 6f, 0);
+            transform.rotation = Quaternion.Euler(GridUtils.GetEulerDirection(direction));
         }
 
         public void SetLocation(Coord location)
@@ -39,6 +47,67 @@ namespace ChessRaid
             else
             {
                 _teamRenderer.material.color = _awayColor;
+            }
+        }
+
+        public async Task RotateTo(Direction toDirection)
+        {
+            var tween = transform.DORotate(GridUtils.GetEulerDirection(toDirection), 0.5f);
+
+            _animator.SetTrigger("Rotate");
+
+            await TaskUtils.WaitYieldInstruction(tween.WaitForCompletion());
+
+            SetDirection(toDirection);
+
+            GridManager._.GetHex(Location).Orientation.Direction = Direction;
+        }
+
+        public async Task MoveTo(Coord locationTo)
+        {
+            var targetHex = GridManager._.GetHex(locationTo);
+
+            var tween = transform.DOMove(targetHex.transform.position, 1f);
+
+            _animator.SetTrigger("Step");
+
+            await TaskUtils.WaitYieldInstruction(tween.WaitForCompletion());
+
+            GridManager._.GetHex(Location).Orientation.Location = Location;
+            var myOrientation = GridManager._.GetHex(Location).Orientation;
+            GridManager._.GetHex(Location).SetOrientation(null);
+
+            SetLocation(locationTo);
+
+            GridManager._.GetHex(Location).SetOrientation(myOrientation);
+        }
+
+        public virtual async Task Attack(Coord location)
+        {
+            _animator.SetTrigger("Attack");
+
+            await Task.Delay(TimeSpan.FromSeconds(1f));
+        }
+
+        public async Task GetDamaged(int damage)
+        {
+            Health -= damage;
+            _animator.SetTrigger("Damage");
+
+            if(Health <= 0)
+            {
+                if(SelectionManager._.SelectedHex?.Champion == this)
+                {
+                    SelectionManager._.Deselect();
+                }
+
+                GridManager._.GetHex(Location).SetOrientation(null);
+                TurnModel._.RemoveTurnChain(this);
+                Squad._.RemoveChampion(this);
+
+                await Task.Delay(TimeSpan.FromSeconds(0.5f));
+
+                Destroy(gameObject);
             }
         }
     }

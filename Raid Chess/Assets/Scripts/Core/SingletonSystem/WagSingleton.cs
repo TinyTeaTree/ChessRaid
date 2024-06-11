@@ -1,4 +1,4 @@
-public class WagSingleton<T>
+public class WagSingleton<T> : IController
     where T : class, new()
 {
     static T _instance;
@@ -19,5 +19,15 @@ public class WagSingleton<T>
 
             return _instance;
         }
+    }
+
+    public virtual void Awake(ContextGroup<IController> group)
+    {
+
+    }
+
+    public virtual void Start()
+    {
+
     }
 }

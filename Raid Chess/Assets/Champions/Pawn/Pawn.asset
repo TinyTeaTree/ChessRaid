@@ -15,3 +15,12 @@ MonoBehaviour:
   Id: Pawn
   Name: Pawn
   Prefab: {fileID: 181975065690371697, guid: c1d7dd8ec48496140875d22c65608218, type: 3}
+  Rules: {fileID: 11400000, guid: f2a1aef8aaac69a4397325ce6edea1ad, type: 2}
+  Stats:
+    Attack: 3
+    Defense: 1
+    Health: 10
+    Accuracy: 3
+    Resistance: 3
+    Speed: 4
+  ProfilePicture: {fileID: 21300000, guid: ddaa530507cf6da428ec646902038ac1, type: 3}

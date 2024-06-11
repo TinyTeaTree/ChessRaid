@@ -12,6 +12,17 @@ namespace ChessRaid
 
         List<Orientation> _champions;
 
+        public IEnumerable<Champion> GetChampions(Team team)
+        {
+            foreach(var c in _champions)
+            {
+                if(c.Champion.Team == team)
+                {
+                    yield return c.Champion;
+                }
+            }
+        }
+
         public void SetUp()
         {
             _champions = new List<Orientation>();
@@ -35,7 +46,13 @@ namespace ChessRaid
                 championInstance.SetLocation(loc.Location);
                 championInstance.SetDirection(loc.Direction);
                 championInstance.SetTeam(loc.Team);
+                championInstance.Health = championInstance.Def.Stats.Health;
             }
+        }
+
+        public void RemoveChampion(Champion champion)
+        {
+            _champions.RemoveAt(_champions.FindIndex(o => o.Champion == champion));
         }
 
     }

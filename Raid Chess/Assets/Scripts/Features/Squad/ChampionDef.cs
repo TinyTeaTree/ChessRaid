@@ -9,5 +9,9 @@ namespace ChessRaid
         public string Name;
 
         public Champion Prefab;
+        public RulesDef Rules;
+        public ChampionStats Stats;
+
+        public Sprite ProfilePicture;
     }
 }

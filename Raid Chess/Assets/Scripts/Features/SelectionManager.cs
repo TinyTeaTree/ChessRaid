@@ -13,6 +13,9 @@ namespace ChessRaid
 
         private void Update()
         {
+            if (TurnManager._.IsExecutingTurn)
+                return;
+
             if (EventSystem.current.IsPointerOverGameObject())
             {
                 return;
@@ -47,13 +50,13 @@ namespace ChessRaid
             }
             else
             {
-                GridManager._.MarkHexAction(hitHex, selectedAction);   
+                TurnModel._.TryOrderAction(hitHex, selectedAction, SelectedHex);
             }
         }
 
         private void ManageHexSelection(Hex hitHex)
         {
-            if (hitHex.IsSelected)
+            if (SelectedHex == hitHex)
             {
                 Deselect();
             }
@@ -71,7 +74,6 @@ namespace ChessRaid
             }
 
             _selectedHex = hex;
-            _selectedHex.ToggleSelect(true);
 
             BattleEventBus.OnSelectionChanged.Invoke();
         }
@@ -86,7 +88,6 @@ namespace ChessRaid
             if (_selectedHex == null)
                 return;
 
-            _selectedHex.ToggleSelect(false);
             _selectedHex = null;
 
             if(shouldInvoke)

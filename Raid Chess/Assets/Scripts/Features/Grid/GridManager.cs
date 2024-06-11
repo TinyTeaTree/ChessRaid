@@ -14,6 +14,58 @@ namespace ChessRaid
 
         Dictionary<Coord, Hex> _hexMap;
 
+        private void Start()
+        {
+            BattleEventBus.OnSelectionChanged.AddListener(OnSelectionChanged);
+        }
+
+        private void OnSelectionChanged()
+        {
+            ClearHexState();
+            SetCurrentState();
+        }
+
+        public void AttachArrow(Arrow arrow)
+        {
+            arrow.transform.SetParent(transform);
+        }
+
+        private void SetCurrentState()
+        {
+            var selectedHex = SelectionManager._.SelectedHex;
+            if (selectedHex == null)
+                return;
+
+            var selectedChampion = selectedHex.Champion;
+            if (selectedChampion == null)
+                return;
+
+            selectedHex.ToggleSelect(true);
+
+            if (selectedChampion.Team != Team.Home)
+                return;
+
+            var turnChain = TurnModel._.GetTurnChain(selectedChampion);
+            if(turnChain == null)
+            {
+                Debug.LogWarning($"Was expecting a turn chain for {selectedChampion.Id}");
+                return;
+            }
+
+            foreach(var turnEvent in turnChain.TurnEvents)
+            {
+                MarkHexAction(_hexMap[turnEvent.Location], turnEvent.Action);
+            }
+        }
+
+        private void ClearHexState()
+        {
+            foreach(var hex in _allHexes)
+            {
+                hex.Clear();
+            }
+        }
+
         public void SetUp()
         {
             _hexMap = new Dictionary<Coord, Hex>();
@@ -39,7 +91,7 @@ namespace ChessRaid
         void CreateHexes()
         {
             if (_allHexes.IsNullOrEmpty())
-            {
+            {   
                 for (int x = 0; x < 10; ++x)
                 {
                     for (int y = 0; y < 10; ++y)

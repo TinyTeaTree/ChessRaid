@@ -2,14 +2,20 @@ using UnityEngine;
 
 namespace ChessRaid
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : BaseContext
     {
-        void Start()
+        protected override void CreateControllers()
         {
-            DataWarehouse._.Init();
+            _controllerGroup.Add(DataWarehouse._);
+            _controllerGroup.Add(TurnModel._);
+            _controllerGroup.Add(RulesManager._);
+            _controllerGroup.Add(TurnManager._);
+        }
+
+        protected override void PostStart()
+        {
             GridManager._.SetUp();
             Squad._.SetUp();
-            TurnManager._.Start();
         }
     }
 }

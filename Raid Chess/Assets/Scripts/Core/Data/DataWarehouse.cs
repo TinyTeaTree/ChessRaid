@@ -79,4 +79,14 @@ public class DataWarehouse : WagSingleton<DataWarehouse>
 
         return _typeWarehouse[boxType] as T;
     }
+
+    public override void Awake(ContextGroup<IController> group)
+    {
+        Init();
+
+        foreach (var box in _boxes)
+        {
+            box.Initialize();
+        }
+    }
 }

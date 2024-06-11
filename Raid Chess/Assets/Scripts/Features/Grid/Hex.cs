@@ -11,11 +11,9 @@ namespace ChessRaid
 
         public Orientation Orientation { get; private set; }
 
-        public bool IsSelected { get; private set; }
+        public bool IsSelected => SelectionManager._.SelectedHex == this;
 
         public Champion Champion => Orientation?.Champion;
-
-        private ActionType _action;
 
         public void SetOrientation(Orientation orientation)
         {
@@ -24,8 +22,6 @@ namespace ChessRaid
 
         public void ToggleSelect(bool select)
         {
-            IsSelected = select;
-
             _hexFloor.material.color = select ? _def.SelectedColor : _def.NotSelectedColor;
         }
 
@@ -36,8 +32,6 @@ namespace ChessRaid
                 Debug.LogWarning($"Can Action Select a Selected Hex, Not Definied");
                 return;
             }
-
-            _action = action;
 
             switch (action)
             {
@@ -54,6 +48,11 @@ namespace ChessRaid
                     _hexFloor.material.color = _def.RotateColor;
                     break;
             }
+        }
+
+        public void Clear()
+        {
+            _hexFloor.material.color = _def.NotSelectedColor;
         }
     }
 }

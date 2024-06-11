@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffa789c1c03e0734fa02a004f12c8e77, type: 3}
+  m_Name: Archer Definition
+  m_EditorClassIdentifier: 
+  Id: Archer
+  Name: Archer
+  Prefab: {fileID: 6156186808246042859, guid: d1cd7b8e60f3dfe41ae4820a0e82bc91, type: 3}
+  Rules: {fileID: 11400000, guid: 013442412b9f7684fb000caf4b5c46fb, type: 2}
+  Stats:
+    Attack: 2
+    Defense: 0
+    Health: 8
+    Accuracy: 5
+    Resistance: 2
+    Speed: 3
+  ProfilePicture: {fileID: 21300000, guid: 7c40778279c03d449a8eedfdaa6f1a4a, type: 3}

@@ -12,12 +12,21 @@ namespace ChessRaid
 
         List<Hex> _allHexes;
         [SerializeField] GridLevelSO _levelSO;
+        [SerializeField] Transform _level;
 
         Dictionary<Coord, Hex> _hexMap;
+
+        public GridState StartingState => _levelSO.StartingState;
 
         private void Start()
         {
             BattleEventBus.OnSelectionChanged.AddListener(OnSelectionChanged);
+            _level.position = _levelSO.LevelPlacement;
+            var colliders = _level.GetComponentsInChildren<BoxCollider>();
+            foreach(var c in colliders)
+            {
+                Destroy(c);
+            }
         }
 
         private void OnSelectionChanged()
@@ -94,15 +103,15 @@ namespace ChessRaid
             _allHexes = new List<Hex>();
 
 
-            foreach (var coord in _levelSO.Grid)
+            foreach (var orientation in _levelSO.HexMap)
             {
                 var hex = Instantiate(_hexPrefab, _hexRoot);
 
-                hex.Location = coord;
+                hex.Location = orientation.Location;
 
-                hex.transform.position = new Vector3(coord.X * Consts.NextHexXDistance, 0f, coord.Y * Consts.NextHexYDistance + (coord.X % 2 != 0 ? Consts.OddHexYOffset : 0f));
+                hex.transform.position = new Vector3(orientation.Location.X * Consts.NextHexXDistance, orientation.Height, orientation.Location.Y * Consts.NextHexYDistance + (orientation.Location.X % 2 != 0 ? Consts.OddHexYOffset : 0f));
 
-                hex.name = $"Hex [{coord.X},{coord.Y}]";
+                hex.name = $"Hex [{orientation.Location.X},{orientation.Location.Y}]";
 
                 _allHexes.Add(hex);
             }

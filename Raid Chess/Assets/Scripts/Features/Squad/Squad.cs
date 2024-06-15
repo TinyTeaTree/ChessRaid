@@ -8,8 +8,6 @@ namespace ChessRaid
     {
         [SerializeField] List<ChampionDef> _championDefinitions;
 
-        [SerializeField] GridState _startingState;
-
         List<Orientation> _champions;
 
         public IEnumerable<Champion> GetChampions(Team team)
@@ -27,7 +25,9 @@ namespace ChessRaid
         {
             _champions = new List<Orientation>();
 
-            foreach (var loc in _startingState.Board)
+            var startingState = GridManager._.StartingState;
+
+            foreach (var loc in startingState.Board)
             {
                 var championPrefab = _championDefinitions.First(c => c.Id == loc.ChampionId).Prefab;
                 var hex = GridManager._.GetHex(loc.Location);

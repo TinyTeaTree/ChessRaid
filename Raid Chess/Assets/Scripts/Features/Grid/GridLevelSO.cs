@@ -6,6 +6,8 @@ namespace ChessRaid
     [CreateAssetMenu(fileName = "Grid Level", menuName = "Chess Raid/Level/Grid")]
     public class GridLevelSO : ScriptableObject
     {
-        public List<Coord> Grid;
+        public List<HexOrientation> HexMap;
+        public Vector3 LevelPlacement;
+        public GridState StartingState;
     }
 }

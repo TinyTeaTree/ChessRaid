@@ -23,14 +23,20 @@ namespace ChessRaid.LevelBuilder
         [ContextMenu("Save")]
         public void Save()
         {
-            _so.Grid = new List<Coord>();
+            _so.HexMap = new List<HexOrientation>();
             foreach(var kvp in _placedHexes)
             {
                 if (kvp.Value.gameObject.activeSelf)
                 {
-                    _so.Grid.Add(kvp.Key);
+                    _so.HexMap.Add(new HexOrientation() { Location = kvp.Key, Height = kvp.Value.transform.position.y});
                 }
             }
+
+#if UNITY_EDITOR
+            UnityEditor.EditorUtility.SetDirty(_so);
+            UnityEditor.AssetDatabase.SaveAssets();
+#endif
+
         }
 
 
@@ -67,9 +73,9 @@ namespace ChessRaid.LevelBuilder
                 }
             }
 
-            foreach(var p in _so.Grid)
+            foreach(var orientation in _so.HexMap)
             {
-                _placedHexes[p].gameObject.SetActive(true);
+                _placedHexes[orientation.Location].gameObject.SetActive(true);
             }
         }
 

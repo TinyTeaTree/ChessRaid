@@ -601,6 +601,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce6cdafbc4d20664d865e7dcc6ac7395, type: 3}
+--- !u!4 &135511461 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 419504389116194787, guid: ce6cdafbc4d20664d865e7dcc6ac7395, type: 3}
+  m_PrefabInstance: {fileID: 135511460}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &161265576
 GameObject:
   m_ObjectHideFlags: 0
@@ -1788,8 +1793,8 @@ MonoBehaviour:
     - ChampionId: Pawn
       Direction: 0
       Location:
-        X: 2
-        Y: 0
+        X: 7
+        Y: 23
       Team: 0
     - ChampionId: Pawn
       Direction: 0
@@ -5508,6 +5513,7 @@ MonoBehaviour:
   _hexPrefab: {fileID: 7788020986150115034, guid: 80065f2e2d7652f48937c42582eb172e, type: 3}
   _hexRoot: {fileID: 4493412189927417639}
   _levelSO: {fileID: 11400000, guid: 545f8a384acda1e4b95ac81cd5a36053, type: 2}
+  _level: {fileID: 135511461}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

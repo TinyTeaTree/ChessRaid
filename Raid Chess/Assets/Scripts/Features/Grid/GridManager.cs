@@ -10,7 +10,8 @@ namespace ChessRaid
         [SerializeField] Hex _hexPrefab;
         [SerializeField] Transform _hexRoot;
 
-        [SerializeField] List<Hex> _allHexes;
+        List<Hex> _allHexes;
+        [SerializeField] GridLevelSO _levelSO;
 
         Dictionary<Coord, Hex> _hexMap;
 
@@ -90,23 +91,20 @@ namespace ChessRaid
 
         void CreateHexes()
         {
-            if (_allHexes.IsNullOrEmpty())
-            {   
-                for (int x = 0; x < 10; ++x)
-                {
-                    for (int y = 0; y < 10; ++y)
-                    {
-                        var hex = Instantiate(_hexPrefab, _hexRoot);
+            _allHexes = new List<Hex>();
 
-                        hex.Location = (x, y);
 
-                        hex.transform.position = new Vector3(x * Consts.NextHexXDistance, 0f, y * Consts.NextHexYDistance + (x % 2 == 1 ? Consts.OddHexYOffset : 0f));
+            foreach (var coord in _levelSO.Grid)
+            {
+                var hex = Instantiate(_hexPrefab, _hexRoot);
 
-                        hex.name = $"Hex [{x},{y}]";
+                hex.Location = coord;
 
-                        _allHexes.Add(hex);
-                    }
-                }
+                hex.transform.position = new Vector3(coord.X * Consts.NextHexXDistance, 0f, coord.Y * Consts.NextHexYDistance + (coord.X % 2 != 0 ? Consts.OddHexYOffset : 0f));
+
+                hex.name = $"Hex [{coord.X},{coord.Y}]";
+
+                _allHexes.Add(hex);
             }
         }
 

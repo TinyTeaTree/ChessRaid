@@ -1,3 +1,5 @@
+using static UnityEditor.FilePathAttribute;
+
 namespace ChessRaid
 {
     public class TurnModel : WagSingleton<TurnModel>
@@ -27,6 +29,42 @@ namespace ChessRaid
             var championChain = _box.GetChampionChain(selectedChampion);
             championChain.AddAction(hitHex, selectedAction);
             GridManager._.MarkHexAction(hitHex, selectedAction);
+        }
+
+        public Orientation GetChampionTurnOrientation(Champion champion)
+        {
+            Orientation result = new Orientation
+            {
+                Champion = champion,
+                Team = champion.Team,
+                Location = champion.Location,
+                Direction = champion.Direction
+            };
+
+            var turnChain = GetTurnChain(champion);
+
+            foreach(var turn in turnChain.TurnEvents)
+            {
+                switch (turn.Action)
+                {
+                    case ActionType.None:
+                        break;
+                    case ActionType.Move:
+                        result.Direction = GridUtils.GetDirection(result.Location, turn.Location);
+                        result.Location = turn.Location;
+                        break;
+                    case ActionType.Attack:
+                        result.Direction = GridUtils.GetDirection(result.Location, turn.Location);
+                        break;
+                    case ActionType.Rotate:
+                        result.Direction = GridUtils.GetDirection(result.Location, turn.Location);
+                        break;
+                    case ActionType.Stay:
+                        break;
+                }
+            }
+
+            return result;
         }
 
         public TurnChain GetTurnChain(Champion champion)

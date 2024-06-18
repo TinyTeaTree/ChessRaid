@@ -8,12 +8,14 @@ namespace ChessRaid
         public Champion Champion;
         public List<TurnEvent> TurnEvents = new();
 
-        public void AddAction(Hex hitHex, ActionType selectedAction)
+        public void AddAction(Coord location, ChampionRule rule)
         {
             TurnEvents.Add(new TurnEvent()
             {
-                Action = selectedAction,
-                Location = hitHex.Location
+                Action = rule.Action,
+                Location = location,
+                ActionPoints = rule.ActionPoints,
+                BlockPostActions = rule.BlockPostActions
             });
         }
 

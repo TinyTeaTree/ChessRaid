@@ -33,13 +33,11 @@ namespace ChessRaid
         private void OnUndoOptionClicked()
         {
             TurnModel._.UndoLastTurn();
-            BattleEventBus.OnSelectionChanged.Invoke();
         }
 
         private void OnCancelOptionClicked()
         {
             TurnModel._.RemoveTurnChain(SelectionManager._.SelectedHex?.Champion);
-            BattleEventBus.OnSelectionChanged.Invoke();
         }
 
         private void TurnOn() 

@@ -24,6 +24,9 @@ MonoBehaviour:
         - Path: 03000000
         - Path: 04000000
         - Path: 05000000
+      ActionPoints: 10
+      SupportMultiple: 1
+      BlockPostActions: 0
     - RuleName: Attack Rule
       Action: 2
       Range:
@@ -31,3 +34,19 @@ MonoBehaviour:
         - Path: 00000000
         - Path: 0000000000000000
         - Path: 000000000000000000000000
+      ActionPoints: 20
+      SupportMultiple: 0
+      BlockPostActions: 1
+    - RuleName: Rotation Rules
+      Action: 3
+      Range:
+        Group:
+        - Path: 00000000
+        - Path: 01000000
+        - Path: 02000000
+        - Path: 03000000
+        - Path: 04000000
+        - Path: 05000000
+      ActionPoints: 5
+      SupportMultiple: 0
+      BlockPostActions: 0

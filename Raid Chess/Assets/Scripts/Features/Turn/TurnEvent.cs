@@ -4,5 +4,7 @@ namespace ChessRaid
     {
         public ActionType Action;
         public Coord Location;
+        public int ActionPoints;
+        public bool BlockPostActions;
     }
 }

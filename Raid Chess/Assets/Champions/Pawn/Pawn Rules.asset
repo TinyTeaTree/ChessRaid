@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4213fc2a99d62c438efddca243fdfe0, type: 3}
-  m_Name: Rules
+  m_Name: Pawn Rules
   m_EditorClassIdentifier: 
   RuleSet:
     Rules:
@@ -22,10 +22,37 @@ MonoBehaviour:
         - Path: 01000000
         - Path: 05000000
         - Path: 0000000000000000
-    - RuleName: Attack Rule
+      ActionPoints: 10
+      SupportMultiple: 1
+      BlockPostActions: 0
+    - RuleName: Rotation Rule
+      Action: 3
+      Range:
+        Group:
+        - Path: 00000000
+        - Path: 01000000
+        - Path: 05000000
+        - Path: 03000000
+        - Path: 02000000
+        - Path: 04000000
+      ActionPoints: 5
+      SupportMultiple: 0
+      BlockPostActions: 0
+    - RuleName: Attack Side Rule
       Action: 2
       Range:
         Group:
         - Path: 00000000
         - Path: 01000000
         - Path: 05000000
+      ActionPoints: 30
+      SupportMultiple: 0
+      BlockPostActions: 1
+    - RuleName: Attack Forward Rule
+      Action: 2
+      Range:
+        Group:
+        - Path: 00000000
+      ActionPoints: 20
+      SupportMultiple: 0
+      BlockPostActions: 1

@@ -1,5 +1,3 @@
-using static UnityEditor.FilePathAttribute;
-
 namespace ChessRaid
 {
     public class TurnModel : WagSingleton<TurnModel>
@@ -23,22 +21,26 @@ namespace ChessRaid
         public void TryOrderAction(Hex hitHex, ActionType selectedAction, Hex selectedHex)
         {
             var selectedChampion = selectedHex.Champion;
-            if (!_rulesManager.CanOrder(selectedChampion, selectedAction, hitHex))
+            if (!_rulesManager.CanOrder(selectedChampion, selectedAction, hitHex, out var rule))
                 return;
 
             var championChain = _box.GetChampionChain(selectedChampion);
-            championChain.AddAction(hitHex, selectedAction);
+            championChain.AddAction(hitHex.Location, rule);
             GridManager._.MarkHexAction(hitHex, selectedAction);
+
+            BattleEventBus.TurnActionChanged.Invoke();
         }
 
-        public Orientation GetChampionTurnOrientation(Champion champion)
+        public ChampionState GetChampionState(Champion champion)
         {
-            Orientation result = new Orientation
+            ChampionState result = new ChampionState
             {
                 Champion = champion,
                 Team = champion.Team,
                 Location = champion.Location,
-                Direction = champion.Direction
+                Direction = champion.Direction,
+                Health = champion.Health,
+                ActionPoints = champion.ActionPoints
             };
 
             var turnChain = GetTurnChain(champion);
@@ -62,6 +64,9 @@ namespace ChessRaid
                     case ActionType.Stay:
                         break;
                 }
+
+                result.ActionPoints -= turn.ActionPoints;
+                result.ActionsBlocked = turn.BlockPostActions;
             }
 
             return result;
@@ -91,6 +96,8 @@ namespace ChessRaid
             }
 
             championChain.RemoveLastActionOrdered();
+
+            BattleEventBus.TurnActionChanged.Invoke();
         }
 
         public void RemoveTurnChain(Champion selectedChampion)
@@ -110,6 +117,8 @@ namespace ChessRaid
             }
 
             championChain.RemoveTurnChain();
+
+            BattleEventBus.TurnActionChanged.Invoke();
         }
 
         public void RemoveAllTurnChains()

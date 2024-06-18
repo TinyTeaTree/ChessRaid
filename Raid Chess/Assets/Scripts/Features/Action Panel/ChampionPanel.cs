@@ -13,6 +13,7 @@ namespace ChessRaid
         [SerializeField] private TMP_Text _name;
         [SerializeField] private TMP_Text _hp;
         [SerializeField] private Slider _hpBar;
+        [SerializeField] private Slider _apBar;
 
         [SerializeField] private TMP_Text _attack;
         [SerializeField] private TMP_Text _defense;
@@ -28,12 +29,18 @@ namespace ChessRaid
         private void Start()
         {
             BattleEventBus.OnSelectionChanged.AddListener(OnSelectionChanged);
+            BattleEventBus.TurnActionChanged.AddListener(OnTurnActionChanged);
 
             TurnOff();
 
             _expandButton.onClick.AddListener(OnExpandButtonClicked);
 
             _expandSection.fillAmount = 0;
+        }
+
+        private void OnTurnActionChanged()
+        {
+            OnSelectionChanged();
         }
 
         private void OnExpandButtonClicked()
@@ -100,7 +107,10 @@ namespace ChessRaid
             _profile.sprite = champion.Def.ProfilePicture;
             _hp.text = champion.Health.ToString();
 
+            var state = TurnModel._.GetChampionState(SelectionManager._.SelectedHex.Champion);
+
             _hpBar.value = champion.Health / (float)champion.Def.Stats.Health;
+            _apBar.value = state.ActionPoints / ((float)champion.Def.Stats.Speed * 10);
 
             _attack.text = $"Att: {champion.Def.Stats.Attack}";
             _defense.text = $"DEF: {champion.Def.Stats.Defense}";

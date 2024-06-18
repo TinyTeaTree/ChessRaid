@@ -8,6 +8,10 @@ namespace ChessRaid
     {
         public string RuleName;
         public ActionType Action;
-        public RuleRange Range; 
+        public RuleRange Range;
+
+        public int ActionPoints;
+        public bool SupportMultiple;
+        public bool BlockPostActions;
     }
 }

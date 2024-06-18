@@ -6,23 +6,27 @@ namespace ChessRaid
     {
         [SerializeField] MeshRenderer _hexFloor;
         [SerializeField] HexDef _def;
+        [SerializeField] MeshRenderer _indicatorRenderer;
 
         public Coord Location;
 
-        public Orientation Orientation { get; private set; }
-
         public bool IsSelected => SelectionManager._.SelectedHex == this;
 
-        public Champion Champion => Orientation?.Champion;
+        public Champion Champion { get; private set; }
 
-        public void SetOrientation(Orientation orientation)
+        public void SetChampion(Champion champion)
         {
-            Orientation = orientation;
+            Champion = champion;
         }
 
         public void ToggleSelect(bool select)
         {
             _hexFloor.material.color = select ? _def.SelectedColor : _def.NotSelectedColor;
+        }
+
+        public void ToggleIndicator(bool indicate)
+        {
+            _indicatorRenderer.gameObject.SetActive(indicate);
         }
 
         public void SetActionSelection(ActionType action)
@@ -52,7 +56,8 @@ namespace ChessRaid
 
         public void Clear()
         {
-            _hexFloor.material.color = _def.NotSelectedColor;
+            ToggleSelect(false);
+            ToggleIndicator(false);
         }
     }
 }

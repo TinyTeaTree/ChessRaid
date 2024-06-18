@@ -6,13 +6,16 @@ namespace ChessRaid
     {
         [SerializeField] private ActionButton[] _allButtons;
         
-        private ActionButton _selectedAction;
+        private ActionPanelBox _box;
 
-        public ActionType SelectedAction => _selectedAction == null ? ActionType.None : _selectedAction.ActionType;
+        public ActionType SelectedAction => _box.ActionType;
+
+        public WagEvent OnBoxChanged => _box.OnChanged;
 
         private void Start()
         {
             BattleEventBus.OnSelectionChanged.AddListener(OnSelectionChanged);
+            _box = DataWarehouse._.GetBox<ActionPanelBox>();
             OnSelectionChanged();
         }
 
@@ -40,9 +43,9 @@ namespace ChessRaid
 
         private void TurnOff()
         {
-            if (_selectedAction != null)
+            if (_box.SelectedAction != null)
             {
-                UnSelect(_selectedAction);
+                UnSelect(_box.SelectedAction);
             }
 
             foreach (var b in _allButtons)
@@ -51,35 +54,32 @@ namespace ChessRaid
             }
         }
 
-        public ActionButton GetSelectedAction()
-        {
-            return _selectedAction;
-        }
-
         public void Select(ActionButton actionButton)
         {
-            if(_selectedAction != null)
+            if(_box.SelectedAction != null)
             {
-                UnSelect(_selectedAction);
+                UnSelect(_box.SelectedAction);
             }
 
-            _selectedAction = actionButton;
-            _selectedAction.MarkSelection(true);
+            actionButton.MarkSelection(true);
+            _box.SelectedAction = actionButton;
+
+            BattleEventBus.TurnActionChanged.Invoke();
         }
 
         public void UnSelect(ActionButton actionButton)
         {
-            if (_selectedAction == null)
+            if (_box.SelectedAction == null)
                 return;
 
-            if(_selectedAction != actionButton)
+            if(_box.SelectedAction != actionButton)
             {
-                Debug.LogWarning($"{_selectedAction} is not equal {actionButton}");
+                Debug.LogWarning($"{_box.SelectedAction} is not equal {actionButton}");
             }
 
-            _selectedAction.MarkSelection(false);
+            _box.SelectedAction.MarkSelection(false);
 
-            _selectedAction = null;
+            _box.SelectedAction = null;
         }
     }
 }

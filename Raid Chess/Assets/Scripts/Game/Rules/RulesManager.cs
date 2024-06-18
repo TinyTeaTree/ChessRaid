@@ -1,46 +1,93 @@
+using System.Collections.Generic;
+using System.Linq;
+
 namespace ChessRaid
 {
     public class RulesManager : WagSingleton<RulesManager>
     {
-        private DataWarehouse _dataWarehouse;
         private TurnModel _turnModel;
-
-        private RulesBox _box;
 
         public override void Awake(ContextGroup<IController> group)
         {
-            _dataWarehouse = group.Get<DataWarehouse>();
             _turnModel = group.Get<TurnModel>();
         }
 
-        public override void Start()
+        public List<TurnEvent> GetPossibleTurns(ChampionState championState, ActionType action)
         {
-            _box = _dataWarehouse.GetBox<RulesBox>();
+            var result = new List<TurnEvent>();
+
+            var rules = championState.Champion.Def.Rules.RuleSet.Rules;
+            if (!championState.ActionsBlocked)
+            {
+                foreach (var rule in rules)
+                {
+                    if (rule.Action != action)
+                        continue;
+
+                    if (rule.ActionPoints > championState.ActionPoints)
+                        continue;
+
+                    var possibilities = rule.Range.Group;
+
+                    foreach(var possibility in possibilities)
+                    {
+                        var outcomeLocation = GridUtils.GetLocation(championState.Location, championState.Direction, possibility);
+
+                        TurnEvent turn = new TurnEvent()
+                        {
+                            Action = rule.Action,
+                            ActionPoints = rule.ActionPoints,
+                            BlockPostActions = rule.BlockPostActions,
+                            Location = outcomeLocation
+                        };
+
+                        if (result.All(t => t.Location != turn.Location))
+                        {
+                            result.Add(turn);
+                        }
+                    }
+                }
+            }
+
+            return result;
         }
 
-        public bool CanOrder(Champion champion, ActionType action, Hex hitHex)
+        public bool CanOrder(Champion champion, ActionType action, Hex hitHex, out ChampionRule outRule)
         {
             var rules = champion.Def.Rules.RuleSet.Rules;
+
+            var state = _turnModel.GetChampionState(champion);
+
+            var championCoord = state.Location;
+            var orderingCoord = hitHex.Location;
+
+            if( state.ActionsBlocked)
+            {
+                outRule = null;
+                return false;
+            }    
 
             foreach (var rule in rules)
             {
                 if (rule.Action != action)
                     continue;
 
-                var turnOrientation = _turnModel.GetChampionTurnOrientation(champion);
-
-                var championCoord = turnOrientation.Location;
-                var orderingCoord = hitHex.Location;
+                if (rule.ActionPoints > state.ActionPoints)
+                    continue;
 
                 foreach (var range in rule.Range.Group)
                 {
-                    var ruleLocation = GridUtils.GetLocation(championCoord, turnOrientation.Direction, range);
+                    var ruleLocation = GridUtils.GetLocation(championCoord, state.Direction, range);
 
                     if (ruleLocation == orderingCoord)
+                    {
+                        outRule = rule;
                         return true;
+                    }
                 }
             }
 
+            outRule = null;
             return false;
         }
     }

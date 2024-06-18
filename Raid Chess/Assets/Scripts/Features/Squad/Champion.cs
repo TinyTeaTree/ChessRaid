@@ -23,6 +23,7 @@ namespace ChessRaid
         public ChampionDef Def => _def;
 
         public int Health { get; set; }
+        public int ActionPoints { get; set; }
 
         public void SetDirection(Direction direction)
         {
@@ -60,12 +61,13 @@ namespace ChessRaid
 
             SetDirection(toDirection);
 
-            GridManager._.GetHex(Location).Orientation.Direction = Direction;
+            GridManager._.GetHex(Location).Champion.Direction = Direction;
         }
 
-        public async Task MoveTo(Coord locationTo)
+        public async Task MoveTo(Coord to)
         {
-            var targetHex = GridManager._.GetHex(locationTo);
+            Coord from = Location;
+            var targetHex = GridManager._.GetHex(to);
 
             var tween = transform.DOMove(targetHex.transform.position, 1f);
 
@@ -73,13 +75,10 @@ namespace ChessRaid
 
             await TaskUtils.WaitYieldInstruction(tween.WaitForCompletion());
 
-            GridManager._.GetHex(Location).Orientation.Location = Location;
-            var myOrientation = GridManager._.GetHex(Location).Orientation;
-            GridManager._.GetHex(Location).SetOrientation(null);
+            GridManager._.GetHex(from).SetChampion(null);
+            GridManager._.GetHex(to).SetChampion(this);
 
-            SetLocation(locationTo);
-
-            GridManager._.GetHex(Location).SetOrientation(myOrientation);
+            SetLocation(to);
         }
 
         public virtual async Task Attack(Coord location)
@@ -101,7 +100,7 @@ namespace ChessRaid
                     SelectionManager._.Deselect();
                 }
 
-                GridManager._.GetHex(Location).SetOrientation(null);
+                GridManager._.GetHex(Location).SetChampion(null);
                 TurnModel._.RemoveTurnChain(this);
                 Squad._.RemoveChampion(this);
 

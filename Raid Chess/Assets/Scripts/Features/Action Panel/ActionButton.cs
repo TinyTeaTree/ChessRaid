@@ -11,7 +11,7 @@ namespace ChessRaid
         [SerializeField] private ActionType _actionType;
 
 
-        private bool IsSelected => _panel.GetSelectedAction() == this;
+        private bool IsSelected => _panel.SelectedAction == _actionType;
 
 
         public ActionType ActionType => _actionType;

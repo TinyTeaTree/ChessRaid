@@ -10,7 +10,7 @@ namespace ChessRaid
 
         public bool IsExecutingTurn { get; private set; }
 
-        public override void Awake(ContextGroup<IController> group)
+        public override void Start()
         {
             _grid = GridManager._;
         }
@@ -56,6 +56,10 @@ namespace ChessRaid
                     break;
                 case ActionType.Attack:
                     await ExecuteAttackTurn(turn, champion);
+                    break;
+                case ActionType.Rotate:
+                    var direction = GridUtils.GetDirection(champion.Location, turn.Location);
+                    await ExecuteRotateTurn(direction, champion);
                     break;
                 default:
                     break;

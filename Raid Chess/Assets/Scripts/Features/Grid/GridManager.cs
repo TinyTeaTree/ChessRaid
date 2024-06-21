@@ -22,7 +22,7 @@ namespace ChessRaid
         {
             BattleEventBus.OnSelectionChanged.AddListener(OnSelectionChanged);
             BattleEventBus.TurnActionChanged.AddListener(OnSelectionChanged);
-            ActionPanel._.OnBoxChanged.AddListener(OnSelectionChanged);
+            ActionPanel.Single.OnBoxChanged.AddListener(OnSelectionChanged);
 
             _level.position = _levelSO.LevelPlacement;
             var colliders = _level.GetComponentsInChildren<BoxCollider>();
@@ -45,7 +45,7 @@ namespace ChessRaid
 
         private void SetCurrentState()
         {
-            var selectedHex = SelectionManager._.SelectedHex;
+            var selectedHex = SelectionManager.Single.SelectedHex;
             if (selectedHex == null)
                 return;
 
@@ -58,7 +58,7 @@ namespace ChessRaid
             if (selectedChampion.Team != Team.Home)
                 return;
 
-            var turnChain = TurnModel._.GetTurnChain(selectedChampion);
+            var turnChain = TurnModel.Single.GetTurnChain(selectedChampion);
             if(turnChain == null)
             {
                 Debug.LogWarning($"Was expecting a turn chain for {selectedChampion.Id}");
@@ -75,12 +75,12 @@ namespace ChessRaid
 
         private void MarkPossibleActionHexes(Champion champion)
         {
-            if (ActionPanel._.SelectedAction == ActionType.None)
+            if (ActionPanel.Single.SelectedAction == ActionType.None)
                 return;
 
-            var championState = TurnModel._.GetChampionState(champion);
+            var championState = TurnModel.Single.GetChampionState(champion);
 
-            var possibleTurn = RulesManager._.GetPossibleTurns(championState, ActionPanel._.SelectedAction);
+            var possibleTurn = RulesManager.Single.GetPossibleTurns(championState, ActionPanel.Single.SelectedAction);
             foreach(var possible in possibleTurn)
             {
                 if (_hexMap.ContainsKey(possible.Location))

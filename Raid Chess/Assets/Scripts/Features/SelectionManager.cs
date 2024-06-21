@@ -13,7 +13,7 @@ namespace ChessRaid
 
         private void Update()
         {
-            if (TurnManager._.IsExecutingTurn)
+            if (TurnManager.Single.IsExecutingTurn)
                 return;
 
             if (EventSystem.current.IsPointerOverGameObject())
@@ -38,7 +38,7 @@ namespace ChessRaid
 
         private void ManageHexClick(Hex hitHex)
         {
-            var selectedAction = ActionPanel._.SelectedAction;
+            var selectedAction = ActionPanel.Single.SelectedAction;
 
             if (selectedAction == ActionType.None)
             {
@@ -50,7 +50,7 @@ namespace ChessRaid
             }
             else
             {
-                TurnModel._.TryOrderAction(hitHex, selectedAction, SelectedHex);
+                TurnModel.Single.TryOrderAction(hitHex, selectedAction, SelectedHex);
             }
         }
 

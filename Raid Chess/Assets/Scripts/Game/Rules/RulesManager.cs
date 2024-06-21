@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace ChessRaid
 {
@@ -7,16 +8,26 @@ namespace ChessRaid
     {
         private TurnModel _turnModel;
 
+        public List<ChampionDef> Champions = null;
+
+        public ChampionDef GetChampionDef(string id)
+        {
+            return Champions.FirstOrDefault(c => c.Id == id);
+        }
+
         public override void Awake(ContextGroup<IController> group)
         {
             _turnModel = group.Get<TurnModel>();
+            Champions = Resources.Load<ChampionsSO>("Champion Collection").ChampionDefinitions;
         }
 
         public List<TurnEvent> GetPossibleTurns(ChampionState championState, ActionType action)
         {
             var result = new List<TurnEvent>();
 
-            var rules = championState.Champion.Def.Rules.RuleSet.Rules;
+            var championDef = GetChampionDef(championState.ChampionId);
+            var rules = championDef.Rules.RuleSet.Rules;
+
             if (!championState.ActionsBlocked)
             {
                 foreach (var rule in rules)

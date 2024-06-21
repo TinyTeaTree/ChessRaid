@@ -1,7 +1,7 @@
 public class WagMonoton<T> : WagBehaviour
     where T : WagMonoton<T>
 {
-    public static T _ { get; private set; }
+    public static T Single { get; private set; }
 
 
     
@@ -9,9 +9,9 @@ public class WagMonoton<T> : WagBehaviour
     {
         base.Awake();
 
-        if (_ == null )
+        if (Single == null )
         {
-            _ = (T) this;
+            Single = (T) this;
         }
         else
         {
@@ -22,9 +22,9 @@ public class WagMonoton<T> : WagBehaviour
     protected override void OnDestroy()
     {
         base.OnDestroy();
-        if (this == _)
+        if (this == Single)
         {
-            _ = null;
+            Single = null;
         }
     }
 }

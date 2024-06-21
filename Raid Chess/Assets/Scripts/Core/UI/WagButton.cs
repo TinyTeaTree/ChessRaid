@@ -11,7 +11,7 @@ public class WagButton : UnityEngine.UI.Button
 
         if(_clickSound != null)
         {
-            WagAudioManager._.Play(_clickSound);
+            WagAudioManager.Single.Play(_clickSound);
         }
     }
 }

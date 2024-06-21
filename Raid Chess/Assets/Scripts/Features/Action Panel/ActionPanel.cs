@@ -15,7 +15,7 @@ namespace ChessRaid
         private void Start()
         {
             BattleEventBus.OnSelectionChanged.AddListener(OnSelectionChanged);
-            _box = DataWarehouse._.GetBox<ActionPanelBox>();
+            _box = DataWarehouse.Single.GetBox<ActionPanelBox>();
             OnSelectionChanged();
         }
 
@@ -23,7 +23,7 @@ namespace ChessRaid
         {
             TurnOff();
 
-            var selectedHex = SelectionManager._.SelectedHex;
+            var selectedHex = SelectionManager.Single.SelectedHex;
 
             if (selectedHex == null)
                 return;

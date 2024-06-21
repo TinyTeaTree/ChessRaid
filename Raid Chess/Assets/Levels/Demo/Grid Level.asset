@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ece078b892be9b945b831a77dd3b2ec2, type: 3}
   m_Name: Grid Level
   m_EditorClassIdentifier: 
+  Id: Demo
   HexMap:
   - Location:
       X: -26
@@ -1375,22 +1376,5 @@ MonoBehaviour:
     Height: 0.6046069
   LevelPlacement: {x: 0.02235341, y: 0.6000857, z: 12.25302}
   StartingState:
-    Board:
-    - ChampionId: Archer
-      Direction: 4
-      Location:
-        X: 7
-        Y: 23
-      Team: 0
-    - ChampionId: Pawn
-      Direction: 3
-      Location:
-        X: 8
-        Y: 23
-      Team: 0
-    - ChampionId: Pawn
-      Direction: 5
-      Location:
-        X: 7
-        Y: 24
-      Team: 0
+    Champions: []
+  LevelView: {fileID: 2847657589439117293, guid: ce6cdafbc4d20664d865e7dcc6ac7395, type: 3}

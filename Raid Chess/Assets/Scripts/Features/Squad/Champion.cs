@@ -17,29 +17,31 @@ namespace ChessRaid
 
         public string Id => _id;
 
-        public Coord Location { get; private set; }
-        public Direction Direction { get; private set; }
-        public Team Team { get; private set; }
+        public ChampionState State { get; set; }
+
+        public Coord Location => State.Location;
+        public Direction Direction => State.Direction;
+        public Team Team => State.Team;
         public ChampionDef Def => _def;
 
-        public int Health { get; set; }
-        public int ActionPoints { get; set; }
+        public int Health => State.Health;
+        public int ActionPoints => State.ActionPoints;
 
         public void SetDirection(Direction direction)
         {
-            Direction = direction;
+            State.Direction = direction;
 
             transform.rotation = Quaternion.Euler(GridUtils.GetEulerDirection(direction));
         }
 
         public void SetLocation(Coord location)
         {
-            Location = location;
+            State.Location = location;
         }
 
         public void SetTeam(Team team)
         {
-            Team = team;
+            State.Team = team;
 
             if(Team == Team.Home)
             {
@@ -60,14 +62,12 @@ namespace ChessRaid
             await TaskUtils.WaitYieldInstruction(tween.WaitForCompletion());
 
             SetDirection(toDirection);
-
-            GridManager._.GetHex(Location).Champion.Direction = Direction;
         }
 
         public async Task MoveTo(Coord to)
         {
             Coord from = Location;
-            var targetHex = GridManager._.GetHex(to);
+            var targetHex = GridManager.Single.GetHex(to);
 
             var tween = transform.DOMove(targetHex.transform.position, 1f);
 
@@ -75,8 +75,8 @@ namespace ChessRaid
 
             await TaskUtils.WaitYieldInstruction(tween.WaitForCompletion());
 
-            GridManager._.GetHex(from).SetChampion(null);
-            GridManager._.GetHex(to).SetChampion(this);
+            GridManager.Single.GetHex(from).SetChampion(null);
+            GridManager.Single.GetHex(to).SetChampion(this);
 
             SetLocation(to);
         }
@@ -90,19 +90,19 @@ namespace ChessRaid
 
         public async Task GetDamaged(int damage)
         {
-            Health -= damage;
+            State.Health = State.Health - damage;
             _animator.SetTrigger("Damage");
 
             if(Health <= 0)
             {
-                if(SelectionManager._.SelectedHex?.Champion == this)
+                if(SelectionManager.Single.SelectedHex?.Champion == this)
                 {
-                    SelectionManager._.Deselect();
+                    SelectionManager.Single.Deselect();
                 }
 
-                GridManager._.GetHex(Location).SetChampion(null);
-                TurnModel._.RemoveTurnChain(this);
-                Squad._.RemoveChampion(this);
+                GridManager.Single.GetHex(Location).SetChampion(null);
+                TurnModel.Single.RemoveTurnChain(this);
+                Squad.Single.RemoveChampion(this);
 
                 await Task.Delay(TimeSpan.FromSeconds(0.5f));
 

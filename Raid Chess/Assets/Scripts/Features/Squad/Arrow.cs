@@ -24,7 +24,7 @@ namespace ChessRaid
 
         private IEnumerator FlyRoutine(Coord toLocation)
         {
-            var pos = GridManager._.GetHex(toLocation).transform.position;
+            var pos = GridManager.Single.GetHex(toLocation).transform.position;
             pos += new Vector3(UnityEngine.Random.Range(-0.2f, 0.2f), 0f, UnityEngine.Random.Range(-0.2f, 0.2f));
 
             var from = transform.position;

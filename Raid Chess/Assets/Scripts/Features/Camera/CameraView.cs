@@ -15,7 +15,7 @@ namespace ChessRaid
 
         private void Start()
         {
-            var anchor = LevelView._.CameraAnchor;
+            var anchor = LevelView.Single.CameraAnchor;
             transform.position = anchor.position;
             transform.rotation = anchor.rotation;
 
@@ -71,7 +71,7 @@ namespace ChessRaid
         {
             var zeroPoint = transform.position + _zeroDelta;
 
-            var level = LevelView._;
+            var level = LevelView.Single;
 
             if (zeroPoint.x < level.LeftBoundry)
             {

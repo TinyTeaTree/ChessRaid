@@ -6,8 +6,6 @@ namespace ChessRaid
 {
     public class Squad : WagMonoton<Squad>
     {
-        [SerializeField] List<ChampionDef> _championDefinitions;
-
         List<Champion> _champions;
 
         public IEnumerable<Champion> GetChampions(Team team)
@@ -25,23 +23,19 @@ namespace ChessRaid
         {
             _champions = new List<Champion>();
 
-            var startingState = GridManager._.StartingState;
+            var startingState = PlayerManager.Single.State.Grid;
 
-            foreach (var loc in startingState.Board)
+            foreach (var state in startingState.Champions)
             {
-                var championPrefab = _championDefinitions.First(c => c.Id == loc.ChampionId).Prefab;
-                var hex = GridManager._.GetHex(loc.Location);
+                var championPrefab = RulesManager.Single.GetChampionDef(state.ChampionId).Prefab;
+                var hex = GridManager.Single.GetHex(state.Location);
                 var championInstance = Instantiate(championPrefab, hex.transform);
 
                 _champions.Add(championInstance);
 
                 hex.SetChampion(championInstance);
 
-                championInstance.SetLocation(loc.Location);
-                championInstance.SetDirection(loc.Direction);
-                championInstance.SetTeam(loc.Team);
-                championInstance.Health = championInstance.Def.Stats.Health;
-                championInstance.ActionPoints = championInstance.Def.Stats.Speed * 10;
+                championInstance.State = state;
             }
         }
 
@@ -49,6 +43,5 @@ namespace ChessRaid
         {
             _champions.RemoveAt(_champions.FindIndex(o => o == champion));
         }
-
     }
 }

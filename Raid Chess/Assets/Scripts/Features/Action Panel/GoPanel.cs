@@ -14,7 +14,7 @@ namespace ChessRaid
 
         private void OnGoClicked()
         {
-            TurnManager._.ExecuteTurn().Forget();
+            TurnManager.Single.ExecuteTurn().Forget();
         }
     }
 }

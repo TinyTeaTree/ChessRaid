@@ -12,16 +12,16 @@ namespace ChessRaid
 
         public override void Start()
         {
-            _grid = GridManager._;
+            _grid = GridManager.Single;
         }
 
         public async Task ExecuteTurn()
         {
             IsExecutingTurn = true;
             {
-                SelectionManager._.Deselect();
+                SelectionManager.Single.Deselect();
 
-                var homeChampions = Squad._.GetChampions(Team.Home);
+                var homeChampions = Squad.Single.GetChampions(Team.Home);
 
                 List<Task> turnTasks = new();
 
@@ -32,14 +32,14 @@ namespace ChessRaid
 
                 await Task.WhenAll(turnTasks);
 
-                TurnModel._.RemoveAllTurnChains();
+                TurnModel.Single.RemoveAllTurnChains();
             }
             IsExecutingTurn = false;
         }
 
         private async Task ExecuteChampionTurn(Champion champion)
         {
-            var turnChain = TurnModel._.GetTurnChain(champion);
+            var turnChain = TurnModel.Single.GetTurnChain(champion);
 
             foreach (var turn in turnChain.TurnEvents)
             {

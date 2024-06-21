@@ -26,7 +26,7 @@ namespace ChessRaid
 
             var championChain = _box.GetChampionChain(selectedChampion);
             championChain.AddAction(hitHex.Location, rule);
-            GridManager._.MarkHexAction(hitHex, selectedAction);
+            GridManager.Single.MarkHexAction(hitHex, selectedAction);
 
             BattleEventBus.TurnActionChanged.Invoke();
         }
@@ -35,7 +35,7 @@ namespace ChessRaid
         {
             ChampionState result = new ChampionState
             {
-                Champion = champion,
+                ChampionId = champion.Id,
                 Team = champion.Team,
                 Location = champion.Location,
                 Direction = champion.Direction,
@@ -80,7 +80,7 @@ namespace ChessRaid
 
         public void UndoLastTurn()
         {
-            var selectedChampion = SelectionManager._.SelectedHex?.Champion;
+            var selectedChampion = SelectionManager.Single.SelectedHex?.Champion;
             if(selectedChampion == null)
             {
                 UnityEngine.Debug.LogWarning($"Did not find any champion to undo turn");
@@ -123,7 +123,7 @@ namespace ChessRaid
 
         public void RemoveAllTurnChains()
         {
-            var champions = Squad._.GetChampions(Team.Home);
+            var champions = Squad.Single.GetChampions(Team.Home);
 
             foreach(var champion in champions)
             {

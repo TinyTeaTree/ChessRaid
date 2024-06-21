@@ -4,7 +4,7 @@ public class WagSingleton<T> : IController
     static T _instance;
     
 
-    public static T _
+    public static T Single
     {
         get
         {

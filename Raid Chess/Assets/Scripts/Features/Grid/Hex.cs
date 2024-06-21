@@ -10,7 +10,7 @@ namespace ChessRaid
 
         public Coord Location;
 
-        public bool IsSelected => SelectionManager._.SelectedHex == this;
+        public bool IsSelected => SelectionManager.Single.SelectedHex == this;
 
         public Champion Champion { get; private set; }
 

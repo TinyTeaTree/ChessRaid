@@ -23,8 +23,8 @@ namespace ChessRaid
         {
             TurnOff();
 
-            if (SelectionManager._.SelectedHex?.Champion != null && 
-                SelectionManager._.SelectedHex?.Champion.Team == Team.Home)
+            if (SelectionManager.Single.SelectedHex?.Champion != null && 
+                SelectionManager.Single.SelectedHex?.Champion.Team == Team.Home)
             {
                 TurnOn();
             }
@@ -32,12 +32,12 @@ namespace ChessRaid
 
         private void OnUndoOptionClicked()
         {
-            TurnModel._.UndoLastTurn();
+            TurnModel.Single.UndoLastTurn();
         }
 
         private void OnCancelOptionClicked()
         {
-            TurnModel._.RemoveTurnChain(SelectionManager._.SelectedHex?.Champion);
+            TurnModel.Single.RemoveTurnChain(SelectionManager.Single.SelectedHex?.Champion);
         }
 
         private void TurnOn() 

@@ -85,7 +85,7 @@ namespace ChessRaid
 
         private void OnSelectionChanged()
         {
-            if (SelectionManager._.SelectedHex?.Champion != null)
+            if (SelectionManager.Single.SelectedHex?.Champion != null)
             {
                 TurnOn();
                 ResolveInfo();
@@ -98,7 +98,7 @@ namespace ChessRaid
 
         private void ResolveInfo()
         {
-            var champion = SelectionManager._.SelectedHex?.Champion;
+            var champion = SelectionManager.Single.SelectedHex?.Champion;
 
             if (champion == null)
                 return;
@@ -107,7 +107,7 @@ namespace ChessRaid
             _profile.sprite = champion.Def.ProfilePicture;
             _hp.text = champion.Health.ToString();
 
-            var state = TurnModel._.GetChampionState(SelectionManager._.SelectedHex.Champion);
+            var state = TurnModel.Single.GetChampionState(SelectionManager.Single.SelectedHex.Champion);
 
             _hpBar.value = champion.Health / (float)champion.Def.Stats.Health;
             _apBar.value = state.ActionPoints / ((float)champion.Def.Stats.Speed * 10);

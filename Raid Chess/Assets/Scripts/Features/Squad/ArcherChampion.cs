@@ -26,7 +26,7 @@ namespace ChessRaid
             var arrow = Instantiate(_arrowOrigin, _arrowParent);
             arrow.transform.localPosition = Vector3.zero;
             arrow.transform.localRotation = Quaternion.identity;
-            GridManager._.AttachArrow(arrow);
+            GridManager.Single.AttachArrow(arrow);
             arrow.gameObject.SetActive(true);
 
             await arrow.FlyOff(location);

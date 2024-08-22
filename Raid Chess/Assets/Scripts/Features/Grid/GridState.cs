@@ -6,6 +6,6 @@ namespace ChessRaid
     public class GridState
     {
         public List<ChampionState> Champions;
-        public MobState Mobs;
+        public MobsState Mobs;
     }
 }

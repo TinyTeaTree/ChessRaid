@@ -1376,5 +1376,14 @@ MonoBehaviour:
     Height: 0.6046069
   LevelPlacement: {x: 0.02235341, y: 0.6000857, z: 12.25302}
   StartingState:
-    Champions: []
+    Champions:
+    - ChampionId: Archer
+      Direction: 1
+      Location:
+        X: 6
+        Y: 22
+      Team: 0
+      Health: 8
+      ActionPoints: 30
+      ActionsBlocked: 0
   LevelView: {fileID: 2847657589439117293, guid: ce6cdafbc4d20664d865e7dcc6ac7395, type: 3}

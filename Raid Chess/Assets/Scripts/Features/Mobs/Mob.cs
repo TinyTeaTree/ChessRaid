@@ -1,8 +1,7 @@
 namespace ChessRaid
 {
-    public class MobState
+    public class Mob : WagBehaviour
     {
 
-         
     }
 }

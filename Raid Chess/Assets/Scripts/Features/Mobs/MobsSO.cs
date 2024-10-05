@@ -1,12 +1,13 @@
-using System.Collections.Generic;
-using ShessRaid;
+using Core;
+using Services;
 using UnityEngine;
 
-namespace ChessRaid
+namespace Game
 {
-    [CreateAssetMenu(fileName = "Mob Collection", menuName = "Chess Raid/Definitions/Mobs")]
-    public class MobsSO : ScriptableObject
+    public class MobsSO : BaseConfigSO
     {
-        public List<MobDef> Mobs;
+        [SerializeField] private MobsConfig _config;
+
+        public override BaseConfig Config => _config;
     }
 }

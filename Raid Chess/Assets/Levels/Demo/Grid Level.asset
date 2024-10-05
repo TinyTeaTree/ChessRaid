@@ -1378,12 +1378,21 @@ MonoBehaviour:
   StartingState:
     Champions:
     - ChampionId: Archer
-      Direction: 1
+      Direction: 2
       Location:
         X: 6
-        Y: 22
+        Y: 21
       Team: 0
       Health: 8
       ActionPoints: 30
+      ActionsBlocked: 0
+    - ChampionId: Pawn
+      Direction: 1
+      Location:
+        X: 0
+        Y: 22
+      Team: 0
+      Health: 10
+      ActionPoints: 40
       ActionsBlocked: 0
   LevelView: {fileID: 2847657589439117293, guid: ce6cdafbc4d20664d865e7dcc6ac7395, type: 3}

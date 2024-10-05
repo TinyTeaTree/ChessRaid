@@ -2,11 +2,9 @@
     "name": "CoreEditor",
     "rootNamespace": "",
     "references": [
-        "GUID:b66f1e9f7a23143e28724b6dbc30b0e6"
+        "GUID:482e463fc4e764343a01b7b60da424b2"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

@@ -55,8 +55,7 @@ public class DebugFrameGraph : MonoBehaviour
         image.texture = _texture;
 
         _lastUpdateTime = DateTime.Now;
-        Application.targetFrameRate = 45;
-        //gameObject.SetActive(PlayerPrefs.GetInt("FrameDebugGraphEnabled", 0) == 1);
+        gameObject.SetActive(PlayerPrefs.GetInt("FrameDebugGraphEnabled", 0) == 1);
     }
 
     private void Update()
